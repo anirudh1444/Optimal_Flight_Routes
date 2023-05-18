@@ -1,2 +1,3 @@
-# OMS
-An order management system for buying fractional shares of private equity 
+# Optimal Flight Routes
+
+Utilizes search algorithms to determine the cheapest flights to take between two locations
