@@ -3,12 +3,11 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.*;
 
 public class Main {
 
-    public static Map<String, List<Airport>> airports = new HashMap<>();
+    public static Map<String, List<Airport>> airports = new HashMap<>(); // List of all airports in the United States
 
     public static void main(String[] args) throws IOException {
 
@@ -17,6 +16,7 @@ public class Main {
         String line = console.readLine();
         line = console.readLine();
 
+        // File Reading Process: break down each airport from the csv file into its name, latitude, longitude, and city of residence
         while (line != null) {
             String name = "";
             String lat = "";
@@ -25,8 +25,7 @@ public class Main {
             int cutoff = line.indexOf(',') + 1;
             int current = cutoff;
 
-            //System.out.println(line.substring(cutoff - 1));
-
+            // Loop to obtain the airport name
             while (current < line.length()) {
                 if (line.charAt(current) == ',' && (int)line.charAt(current + 2) <= 57 && (int)line.charAt(current + 2) >= 48) {
                     name = line.substring(cutoff, current);
@@ -39,6 +38,7 @@ public class Main {
 
             }
 
+            // Loop to obtain the latitude
             while (line.charAt(current) != ',') {
                 current += 1;
             }
@@ -46,15 +46,18 @@ public class Main {
             cutoff = current + 1;
             current += 1;
 
+            // Loop to obtain the longitude
             while (line.charAt(current) != ',') {
                 current += 1;
             }
             longit = line.substring(cutoff, current);
 
+            // City location is everything after the longitude
             city = line.substring(current + 1);
 
             Airport added = new Airport(name, Double.parseDouble(lat), Double.parseDouble(longit), city);
 
+            // Add this airport to the HashMap of all airports
             if (airports.containsKey(city)) {
                 airports.get(city).add(added);
             } else {
@@ -64,14 +67,8 @@ public class Main {
             line = console.readLine();
         }
 
-        int total = 0;
-        for (String name : airports.keySet()) {
-            total += airports.get(name).size();
-        }
-
-        //System.out.println(total);
-
-        // TEST CASE 
+        /*
+        // TEST CASE
 	    Airport Fremont = new Airport("Fremont", 13, 18.54151, "Fremont");
         Airport Boston = new Airport("Boston", 27, 14, "Boston");
         Airport Dallas = new Airport("Dallas", 53, 109, "Dallas");
@@ -87,7 +84,7 @@ public class Main {
 
         Flight_PathFinder trip1 = new Flight_PathFinder(options);
 
-        List<List<Flight>> answer = trip1.flight_options(Fremont, Boston, 2, 11, null, "Stops");
+        List<List<Flight>> answer = trip1.flight_options(Fremont, Boston, 0, 2, 11, null, "Stops");
 
         for (List<Flight> path : answer) {
             System.out.print(path.get(0).start.name);
@@ -96,6 +93,7 @@ public class Main {
             }
             System.out.println();
         }
+         */
 
     }
 }

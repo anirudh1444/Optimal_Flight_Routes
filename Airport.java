@@ -6,6 +6,7 @@ public class Airport {
     double x;
     double y;
 
+    // Initialize each airport with the name, city, and coordinate location
     public Airport(String name, double Xcoordinate, double Ycoordinate, String city) {
         this.name = name;
         this.x = Xcoordinate;
