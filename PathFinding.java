@@ -16,7 +16,9 @@ public class PathFinding {
     List<String> locations;
     List<Path> options;
 
-    // Arguments : startIATA, destIATA, startTime, layoverLimit, priceLimit, class, sort, (Viable locations)
+    boolean Boeing737Toggle;
+
+    // Arguments : startIATA, destIATA, startTime, layoverLimit, priceLimit, class, sort, (Viable locations), True/False for allowing Boeing 737
     public PathFinding (String[] args) {
 
         // Initializes variables
@@ -29,6 +31,7 @@ public class PathFinding {
         this.sort = args[7];
         this.locations = new ArrayList<>(Arrays.asList(args[8].split(",")));
         this.options = new ArrayList<>();
+        this.Boeing737Toggle = Boolean.parseBoolean(args[9]);
 
         // Calls DFS algorithm
         traversal(start, destination, startTime, new Path(start));
@@ -82,6 +85,11 @@ public class PathFinding {
 
             // Flight document
             Document flight = Main.flights.find(new Document("_id", flight_id)).first();
+
+            // Remove all Boeing 737s from the search parameters if requested by the user
+            if (!Boeing737Toggle && "Boeing".equals(flight.get("brand")) && "737".equals(flight.get("model"))) {
+                continue;
+            }
 
             // Find best seat fitting the conditions
             double bestSeat = cheapestSeat(flight);

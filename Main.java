@@ -90,14 +90,14 @@ public class Main {
         airports.insertOne(airport);
     }
 
-    // Contains arguments: startAirportIATA, destAirportIATA, departureTime, arrivalTime, Remaining: Seats (Code, Class, Cost, Window / Aisle / Middle)
+    // Contains arguments: startAirportIATA, destAirportIATA, departureTime, arrivalTime, Plane Brand, Plane Model, Remaining: Seats (Code, Class, Cost, Window / Aisle / Middle)
     public static void addFlight(String[] args) {
 
         // List containing all the seats in the flight
         List<Document> seats = new ArrayList<>();
 
         // Construct a document for each seat
-        for (int index = 5; index < args.length; index++) {
+        for (int index = 7; index < args.length; index++) {
 
             args[index] = args[index].substring(1, args[index].length() - 1);
             String[] information = args[index].split(",");
@@ -121,6 +121,8 @@ public class Main {
                 .append("destIATA", args[2])
                 .append("arrivalTime", args[3])
                 .append("departureTime", args[4])
+                .append("brand", args[5])
+                .append("model", args[6])
                 .append("seats", seats);
 
         // Obtain the document of the starting airport
